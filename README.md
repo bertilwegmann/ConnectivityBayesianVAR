@@ -25,3 +25,7 @@ Di Martino, A., Yan, C.-G., Li, Q., Denio, E., Castellanos, F. X., Alaerts, K., 
 Assaf, M., Bookheimer, S. Y., Dapretto, M., et al. (2014). The autism brain imaging data
 exchange: towards a large-scale evaluation of the intrinsic brain architecture in autism.
 Molecular psychiatry, 19(6):659–667.
+
+# Required R packages
+library(R.matlab);library(LaplacesDemon);library(MCMCpack);library(MASS);library(mvnfast);library(Matrix);
+library(matrixcalc);library(CholWishart);library(PEIP);library(base);library(invgamma)
