@@ -1,8 +1,8 @@
 # BayesianVAR
 
 # Origin of the real data set
-We use data from ABIDE1 (Di Martino et al.,
-2014) preprocessed2 (Craddock et al., 2013) consisting of resting state fMRI data from 539 individuals
+We use data from ABIDE (Di Martino et al.,
+2014;http://fcon_1000.projects.nitrc.org/indi/abide/abide_I.html) preprocessed (Craddock et al., 2013;http://preprocessed-connectomes-project.org/abide/index.html) consisting of resting state fMRI data from 539 individuals
 diagnosed with ASD and 573 healthy controls; we use randomly selected subsets
 of 20 controls and 20 ASD patients from the data collected at New York University. The fMRI
 data were collected using a 3 T Siemens Allegra scanner using a TR of 2 seconds. Each fMRI
