@@ -5,7 +5,7 @@ data {
   int<lower=0> qp; // number of VAR coefficients, qp = q*p
   int<lower=0> T; // number of time points
   
-  array[S] matrix[p, p] R_s; // array with matrices R_s for all subjects
+  array[S] matrix[p, p] M_s; // array with matrices M_s for all subjects
   array[S] matrix[q, p] E_s; // array with matrices E_s for all subjects
   array[S] matrix[q, q] Q_s_inv; // array with matrices Q_s_inv for all subjects
   
@@ -36,7 +36,7 @@ model {
   Sum_logdet = 0;
   // log-likelihood
   for (s in 1 : S) {
-    Part_s = nu * Sigma + R_s[s] + quad_form(Q_s_inv[s], B - E_s[s]);
+    Part_s = nu * Sigma + M_s[s] + quad_form(Q_s_inv[s], B - E_s[s]);
     Sum_logdet = Sum_logdet + log_determinant(Part_s);
   }
   

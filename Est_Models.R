@@ -129,7 +129,7 @@ fr <- function(kappa_lambda){
   Psi_D <- matrix(0,p,p)
   
   # Matrices for the model with Sigma_s
-  R_s <- array(matrix(0,p,p),dim = c(S,p,p))
+  M_s <- array(matrix(0,p,p),dim = c(S,p,p))
   E_s <- array(matrix(0,q,p),dim = c(S,q,p))
   Q_s_inv_mat <- array(matrix(0,q,q),dim = c(S,q,q))
   P_s_mat <- array(matrix(0,q,q),dim = c(S,q,q))
@@ -170,7 +170,7 @@ fr <- function(kappa_lambda){
     # Matrices for the model with Sigma_s
     Temp <- solve(Q_s_inv) %*% Qsinv_Es
     E_s[ii,,] <- Temp
-    R_s[ii,,] <- Psi_D_s - t(Temp)%*%Q_s_inv%*%Temp
+    M_s[ii,,] <- Psi_D_s - t(Temp)%*%Q_s_inv%*%Temp
     Q_s_inv_mat[ii,,] <- Q_s_inv
     #
     
@@ -202,7 +202,7 @@ fr <- function(kappa_lambda){
     Log_c_k + 0.5*p*Det_P0$modulus - 0.5*p*Det_P_n$modulus - 0.5*(S*CurrT-q+nu_0)*Det_Psi_n$modulus
   } else {
     ResMat <- list("Log_c_k"=Log_c_k,"P0"=P0,"P_D"=P_D,"P_n"=P_n,"B_n"=B_n,"Psi_n"=Psi_n,"nu_n"=nu_n,
-                   "R_s"=R_s,"E_s"=E_s,"Q_s_inv_mat"=Q_s_inv_mat,"P_s_mat"=P_s_mat)
+                   "M_s"=M_s,"E_s"=E_s,"Q_s_inv_mat"=Q_s_inv_mat,"P_s_mat"=P_s_mat)
     return(ResMat)
   }
   
@@ -267,7 +267,7 @@ for (ii in 1:Ndraws){
 saveRDS(object=list(B,Sigma,Rho,nu_n),file = paste(WorkingDir,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep=""))
 ##########################################
 
-R_s <- ResMat$R_s
+M_s <- ResMat$M_s
 E_s <- ResMat$E_s
 Q_s_inv <- ResMat$Q_s_inv_mat
 
@@ -279,7 +279,7 @@ if (ModelType==1){
   B_0_spec <- as.vector(matrix(0,1,qp)) # Needs to be only zeros
   Chol_Cov_B <- chol(solve(P_0))# cholesky decomposition of prior covariance matrix
   
-  data.list <- list(p=p,q=q,S=S,qp=qp,T=CurrT,R_s=R_s,E_s=E_s,Q_s_inv=Q_s_inv,
+  data.list <- list(p=p,q=q,S=S,qp=qp,T=CurrT,M_s=M_s,E_s=E_s,Q_s_inv=Q_s_inv,
                     B_0_spec=B_0_spec,Chol_Cov_B=Chol_Cov_B,nu_0=nu_0,Psi_0=Psi_0,I_Mat=I_Mat)
   
   # Initial values to HMC
