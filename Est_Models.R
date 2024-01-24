@@ -4,6 +4,7 @@ rm(list=ls())
 
 ### load packages
 library(R.matlab)
+library(rstan)
 library(LaplacesDemon)
 library(MCMCpack)
 library(MASS)
@@ -223,7 +224,7 @@ Nwarmup <- 200
 Nchains <- 2
 Ndraws <- Nchains*(Niter - Nwarmup)
 
-DropBoxCat <- getwd()
+WorkingDir <- getwd()
 
 ### Make inference for the model with common dense Sigma ###
 MakeOpt <- 0
@@ -248,7 +249,7 @@ for (ii in 1:Ndraws){
   Sigma[ii,,] <- as.symmetric.matrix(SigmaCurr)
   B[ii,,] <- rmatrixnorm(B_n, P_n_inv, SigmaCurr)
 }
-saveRDS(object=list(B,Sigma,nu_n),file = paste(DropBoxCat,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep="")) 
+saveRDS(object=list(B,Sigma,nu_n),file = paste(WorkingDir,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep="")) 
 ###############################
 
 ModelType <- 2
@@ -263,7 +264,7 @@ for (ii in 1:Ndraws){
   DiagMat <- diag(sqrt(1/diag(SigmaCurr)),p,p)
   Rho[ii,,] <- DiagMat %*% SigmaCurr %*% DiagMat
 }
-saveRDS(object=list(B,Sigma,Rho,nu_n),file = paste(DropBoxCat,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep=""))
+saveRDS(object=list(B,Sigma,Rho,nu_n),file = paste(WorkingDir,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep=""))
 ##########################################
 
 R_s <- ResMat$R_s
@@ -287,10 +288,10 @@ if (ModelType==1){
   }
   
   Est_Mod <- 
-    stan(file=paste(DropBoxCat,"/","New_Est_Model.stan",sep=""),
+    stan(file=paste(WorkingDir,"/","New_Est_Model.stan",sep=""),
                   data=data.list,init=initf1,chains=Nchains,cores=Nchains,iter=Niter,warmup=Nwarmup,refresh=10)
   
-  PostDraws <- extract.samples(Est_Mod)
+  PostDraws <- extract(Est_Mod)
   B <- PostDraws$B
   Sigma <- PostDraws$Sigma
   nu <- PostDraws$nu
@@ -301,7 +302,7 @@ if (ModelType==1){
     Rho[jj,,] <- DiagMat %*% CurrSigma %*% DiagMat
   }
   saveRDS(object=list(Est_Mod,B,Sigma,Rho,nu),
-          file = paste(DropBoxCat,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep=""))
+          file = paste(WorkingDir,"/",ModelType,"_",ToFileName,"_nLag_",nLag,".RDS",sep=""))
 }
 
 }
