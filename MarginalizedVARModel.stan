@@ -19,7 +19,7 @@ data {
 parameters {
   cov_matrix[p] Sigma; // covariance matrix
   matrix[q, p] B_spec; // matrix of VAR coefficients
-  real<lower=p + 2, upper=10000> nu; // Degree of freedom in inverse-Wishart matrix for Sigma_s
+  real<lower=p + 2> nu; // Degree of freedom in inverse-Wishart matrix for Sigma_s
 }
 transformed parameters {
   matrix[q, p] B;
