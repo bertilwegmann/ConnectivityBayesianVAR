@@ -27,5 +27,5 @@ exchange: towards a large-scale evaluation of the intrinsic brain architecture i
 Molecular psychiatry, 19(6):659–667.
 
 # Required R packages
-library(R.matlab);library(LaplacesDemon);library(MCMCpack);library(MASS);library(mvnfast);library(Matrix);
+library(R.matlab);library(rstan);library(LaplacesDemon);library(MCMCpack);library(MASS);library(mvnfast);library(Matrix);
 library(matrixcalc);library(CholWishart);library(PEIP);library(base);library(invgamma)
