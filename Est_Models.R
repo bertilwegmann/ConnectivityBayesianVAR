@@ -288,7 +288,7 @@ if (ModelType==1){
   }
   
   Est_Mod <- 
-    stan(file=paste(WorkingDir,"/","New_Est_Model.stan",sep=""),
+    stan(file=paste(WorkingDir,"/","MarginalizedVARModel.stan",sep=""),
                   data=data.list,init=initf1,chains=Nchains,cores=Nchains,iter=Niter,warmup=Nwarmup,refresh=10)
   
   PostDraws <- extract(Est_Mod)
